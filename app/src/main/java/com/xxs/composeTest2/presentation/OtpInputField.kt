@@ -42,24 +42,24 @@ import androidx.core.text.isDigitsOnly
 
 @Composable
 fun OtpInputField(
-    number:Int?,
+    number: Int?,
     focusRequester: FocusRequester,
     color: Color = MaterialTheme.colorScheme.surface,
     borderWidth: Dp = 2.dp,
     borderColor: Color = MaterialTheme.colorScheme.primary,
     fontSize: TextUnit = 36.sp,
-    onFocusChanged:(Boolean)->Unit,
-    onNumberChange:(Int?)->Unit,
-    onKeyboardBack:()-> Unit,
+    onFocusChanged: (Boolean) -> Unit,
+    onNumberChange: (Int?) -> Unit,
+    onKeyboardBack: () -> Unit,
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(6.dp)
-){
+) {
     val text by remember(number) {
         mutableStateOf(
             TextFieldValue(
                 text = number?.toString().orEmpty(),
                 selection = TextRange(
-                    index = if(number != null)1 else 0
+                    index = if (number != null) 1 else 0
                 )
             )
         )
@@ -73,17 +73,17 @@ fun OtpInputField(
                 shape = shape
             )
             .clip(shape)
-            .background(color =  color),
+            .background(color = color),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         BasicTextField(
             value = text,
-            onValueChange = {
-                newText->
-                    val newNumber = newText.text
-                    if(newNumber.length<=1 && newNumber.isDigitsOnly()){
-                        onNumberChange(newNumber.toIntOrNull())
-                    }
+            onValueChange = { newText ->
+
+                val newNumber = newText.text
+                if (newNumber.length <= 1 && newNumber.isDigitsOnly()) {
+                    onNumberChange(newNumber.toIntOrNull())
+                }
             },
             cursorBrush = SolidColor(borderColor),
             singleLine = true,
@@ -99,43 +99,43 @@ fun OtpInputField(
             modifier = Modifier
                 .padding(2.dp)
                 .focusRequester(focusRequester)
-                .onFocusChanged{
+                .onFocusChanged {
                     isFocused = it.isFocused
                     onFocusChanged(it.isFocused)
                 }
-                .onKeyEvent{
-                    event ->
-                        val didPressDelete = event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_DEL
-                        if(didPressDelete){
-                            onKeyboardBack()
-                        }
-                        false
-                },
-            decorationBox = {
-                innerBox->
-                    if(!isFocused&&number == null){
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ){
-                            Text(
-                                text = "-",
-                                color = borderColor,
-                                fontSize = fontSize,
-                                fontWeight = FontWeight.Light
-                            )
-                        }
+                .onKeyEvent { event ->
+                    val didPressDelete = event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_DEL
+                    if (didPressDelete&&number == null) {
+                        onKeyboardBack()
                     }
+                    false
+                },
+            decorationBox = { innerBox ->
+                innerBox()
+                if (!isFocused && number == null) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "-",
+                            color = borderColor,
+                            fontSize = fontSize,
+                            fontWeight = FontWeight.Light
+                        )
+                    }
+                }
             }
         )
     }
 }
+
 @Preview(showBackground = true)
 @Composable
-fun OtpInputFieldPreview(){
+fun OtpInputFieldPreview() {
     OtpInputField(
         number = null,
-        focusRequester = remember{FocusRequester()},
+        focusRequester = remember { FocusRequester() },
         onFocusChanged = {},
         onNumberChange = {},
         onKeyboardBack = {},
