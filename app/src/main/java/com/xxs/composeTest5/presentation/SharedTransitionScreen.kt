@@ -37,9 +37,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.laohei.shared_transition.data.OnePieceModel
-import com.laohei.shared_transition.data.onePieceData
+
 import com.xxs.composetest.R
+import com.xxs.composetest.presentation.OnePieceModel
+import com.xxs.composetest.presentation.onePieceData
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
