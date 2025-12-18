@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeTest">
         <activity
-            android:name="com.xxs.composeTest6.MainActivity6"
+            android:name="com.xxs.composeTest7.MainActivity7"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeTest">
